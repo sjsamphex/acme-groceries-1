@@ -15,12 +15,20 @@ class _App extends Component {
   }
   render() {
     console.log('app sees this', this.props.groceries);
+    const purchased = this.props.groceries.filter(
+      (groc) => groc.purchased === true
+    );
     return (
       <div>
         <h1>Acme Groceries</h1>
+        <div></div>
         <ul>
           {this.props.groceries.map((groc, idx) => {
-            return <li key={idx}>{groc.name}</li>;
+            return (
+              <li key={idx} className={groc.purchased ? 'purchased' : ''}>
+                {groc.name}
+              </li>
+            );
           })}
         </ul>
       </div>

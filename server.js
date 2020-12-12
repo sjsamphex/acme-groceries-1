@@ -5,6 +5,7 @@ const path = require('path');
 const app = express();
 
 app.use('/dist', static(path.join(__dirname, 'dist')));
+app.use('/public', static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 app.get('/', (req, res, next) =>
