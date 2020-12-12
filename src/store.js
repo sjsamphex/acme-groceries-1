@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
 
 const state = {
-  groceries: 5,
+  groceries: [],
 };
 
 //action constant
@@ -17,6 +17,8 @@ const loadGroceries = (groceries) => {
 
 const store = createStore((initialState = state, action) => {
   if (action === null) {
+  } else if (action.type === LOAD_GROCERIES) {
+    return { ...state, groceries: action.data };
   }
   return { ...initialState };
 });

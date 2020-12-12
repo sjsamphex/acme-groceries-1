@@ -9,42 +9,41 @@ class _App extends Component {
     super(props);
     //should this do state equals getState from store?
   }
-  // componentDidMount() {
-  //   //do a dispatch somehow? or receive props data
-  // }
+  async componentDidMount() {
+    //const grocerydata = (await axios.get('/api/groceries')).data;
+    this.props.loadGroceries();
+  }
   render() {
     console.log('app sees this', this.props.groceries);
     return (
       <div>
         <h1>Acme Groceries</h1>
-        {/* {this.props.groceries.map((groc) => (
-          <li>{groc.name}</li>
-        ))} */}
+        <ul>
+          {this.props.groceries.map((groc, idx) => {
+            return <li key={idx}>{groc.name}</li>;
+          })}
+        </ul>
       </div>
     );
   }
 }
 
-const mapStateToProps = async () => {
-  const grocerydata = (await axios.get('/api/groceries')).data;
-  console.log('mapstatetoprops sees this: ', grocerydata);
+const mapStateToProps = (state) => {
+  // console.log('mapstatetoprops sees this: ', grocerydata);
   return {
-    groceries: grocerydata,
+    groceries: state.groceries,
   };
 };
 //will get passed into the provider i think
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    loadGroceries() {
-      return {
-        type: LOAD_GROCERIES,
-        store,
-      };
+    loadGroceries: async () => {
+      const groceries = (await axios.get('/api/groceries')).data;
+      dispatch({ type: LOAD_GROCERIES, data: groceries });
     },
   };
 };
-
 const App = connect(mapStateToProps, mapDispatchToProps)(_App);
 
 //will use Provide here
