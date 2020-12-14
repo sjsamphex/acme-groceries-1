@@ -25,10 +25,15 @@ class _App extends Component {
   constructor(props) {
     super(props);
   }
-  async componentDidMount() {
+  componentDidMount() {
     this.props.loadGroceries();
+    window.addEventListener('hashchange', () => {
+      this.props.setView(window.location.hash.slice(1));
+    });
+    this.props.setView(window.location.hash.slice(1));
   }
   render() {
+    console.log(this.props.view);
     const purchased = this.props.groceries.filter(
       (groc) => groc.purchased === true
     );
@@ -50,6 +55,7 @@ const mapDispatchToProps = (dispatch) => {
       const groceries = (await axios.get('/api/groceries')).data;
       dispatch({ type: LOAD_GROCERIES, data: groceries });
     },
+    setView: (view) => dispatch({ type: 'SET_VIEW', view }),
   };
 };
 const App = connect(mapStateToProps, mapDispatchToProps)(_App);
