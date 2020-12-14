@@ -5,13 +5,20 @@ import store, { LOAD_GROCERIES } from './store';
 import axios from 'axios';
 import Nav from './Nav';
 
-const _Groceries = ({ groceries }) => {
+const _Groceries = ({ groceries, view }) => {
+  let groc = groceries;
+  if (view === 'needs') {
+    groc = groceries.filter((grocery) => !grocery.purchased);
+  }
+  if (view === 'purchased') {
+    groc = groceries.filter((grocery) => grocery.purchased);
+  }
   return (
     <ul>
-      {groceries.map((groc, idx) => {
+      {groc.map((grocitem, idx) => {
         return (
-          <li key={idx} className={groc.purchased ? 'purchased' : ''}>
-            {groc.name}
+          <li key={idx} className={grocitem.purchased ? 'purchased' : ''}>
+            {grocitem.name}
           </li>
         );
       })}
