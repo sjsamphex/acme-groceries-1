@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import store, { LOAD_GROCERIES } from './store';
 import axios from 'axios';
+import Nav from './Nav';
 
 const _Groceries = ({ groceries }) => {
   return (
@@ -34,18 +35,14 @@ class _App extends Component {
     return (
       <div>
         <h1>Acme Groceries</h1>
-        <div></div>
+        <Nav />
         <Groceries />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    groceries: state.groceries,
-  };
-};
+const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => {
   return {

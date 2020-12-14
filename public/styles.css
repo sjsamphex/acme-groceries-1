@@ -1,3 +1,8 @@
 .purchased {
   text-decoration: line-through;
 }
+
+nav {
+  display: flex;
+  justify-content: space-around;
+}
